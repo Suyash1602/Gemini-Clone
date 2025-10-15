@@ -70,7 +70,7 @@ const Main = () => {
                   <hr />
                 </div>
               ) : (
-                <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
+                <pre className="gemini-response">{resultData}</pre>
               )}
             </div>
           </div>

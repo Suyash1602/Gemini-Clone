@@ -224,6 +224,13 @@
   text-align: center;
 }
 
+.gemini-response {
+  white-space: pre-wrap;
+  font-family: monospace;
+  word-wrap: break-word;
+  padding: 1rem;
+}
+
 @media (max-width: 600px) {
   .main-bottom input {
     flex: none;

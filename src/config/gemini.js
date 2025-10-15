@@ -4,11 +4,10 @@
  * $ npm install @google/genai
  */
 
-import { GoogleGenAI } from "@google/genai"; // Changed package name
+import { GoogleGenAI } from "@google/genai";
 
 const apiKey = "AIzaSyD93qiUIRPQsQr8uA01xFgEkjlJXOWb7sA";
 
-// New way to instantiate the client
 const ai = new GoogleGenAI({ apiKey });
 
 const generationConfig = {
@@ -26,15 +25,18 @@ async function run(prompt) {
     history: [],
   });
 
-  // 1. Send the message. 'result' is the full response object (GenerateContentResult).
+  // Send message and get response
   const result = await chatSession.sendMessage({ message: prompt });
 
-  // 2. CORRECT ACCESS: Access the .text property directly.
-  // This is the fix for the "TypeError: result.text is not a function" error.
-  const responseText = result.text; // <<-- FIX APPLIED HERE
-
+  // Get raw response text with preserved formatting
+  const responseText = result.text;
   console.log(responseText);
-  return responseText;
+
+  // Return formatted text
+  return {
+    text: responseText,
+    formattedText: true, // Flag to indicate text has formatting
+  };
 }
 
 export default run;
