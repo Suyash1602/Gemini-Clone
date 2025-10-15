@@ -179,6 +179,51 @@
   line-height: 1.8;
 }
 
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 700px;
+  width: 100%;
+  background: #f5f7fa;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.input-container input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  padding: 10px;
+  outline: none;
+  min-width: 0;
+}
+
+.input-container button {
+  background: #e6eaf1;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-text {
+  margin: 40px 0;
+  padding: 24px;
+  background: #f0f4f9;
+  border-radius: 12px;
+  font-size: 20px;
+  color: #585858;
+  text-align: center;
+}
+
 @media (max-width: 600px) {
   .main-bottom input {
     flex: none;
@@ -195,5 +240,13 @@
   }
   .main .cards {
     display: none;
+  }
+  .input-container {
+    max-width: 100%;
+    padding: 8px 10px;
+  }
+  .input-container input {
+    font-size: 16px;
+    padding: 8px;
   }
 }

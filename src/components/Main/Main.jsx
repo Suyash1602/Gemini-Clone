@@ -14,10 +14,21 @@ const Main = () => {
     input,
   } = useContext(Context);
 
-  const noUseBtn = () => {
-    alert("Demo button no work.");
+  // Handle Enter key for input
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && input.trim()) {
+      onSent();
+      setInput("");
+    }
   };
 
+  // Handle send button click
+  const handleSend = () => {
+    if (input.trim()) {
+      onSent();
+      setInput("");
+    }
+  };
 
   return (
     <div className="main">
@@ -34,23 +45,14 @@ const Main = () => {
               </p>
               <p>How can I help you today ?</p>
             </div>
-            <div className="cards">
-              <div className="card">
-                <p>Suggest beautiful places to see on an upcoing road trip</p>
-                <img src={assets.compass_icon} alt="compass icon" />
-              </div>
-              <div className="card">
-                <p>Briefly summarize this concept: urban planning</p>
-                <img src={assets.bulb_icon} alt="bulb icon" />
-              </div>
-              <div className="card">
-                <p>Brainstorm team bonding activities for our work retreat</p>
-                <img src={assets.message_icon} alt="message icon" />
-              </div>
-              <div className="card">
-                <p>Imporve the readability of the following code</p>
-                <img src={assets.code_icon} alt="code icon" />
-              </div>
+            <div className="info-text">
+              <p>
+                Welcome to Gemini! Enter your prompt below and press{" "}
+                <b>Enter</b> or click the send button to get started.
+                <br />
+                Gemini can help you brainstorm ideas, summarize concepts, and
+                answer your questions.
+              </p>
             </div>
           </>
         ) : (
@@ -61,7 +63,6 @@ const Main = () => {
             </div>
             <div className="result-data">
               <img src={assets.gemini_icon} alt="gemini icon" />
-
               {loading ? (
                 <div className="loader">
                   <hr />
@@ -76,24 +77,25 @@ const Main = () => {
         )}
 
         <div className="main-bottom">
-          <div className="search-box">
+          <div className="input-container">
             <input
               onChange={(e) => setInput(e.target.value)}
               value={input}
               type="text"
               placeholder="Enter prompt here.."
+              onKeyDown={handleKeyDown}
             />
-            <div>
-              <img onClick={()=>noUseBtn()} src={assets.gallery_icon} alt="gallery icon" />
-              <img onClick={()=>noUseBtn()} src={assets.mic_icon} alt="mic icon" />
-              {input ? (
-                <img
-                  onClick={() => onSent()}
-                  src={assets.send_icon}
-                  alt="send icon"
-                />
-              ) : null}
-            </div>
+            <button onClick={handleSend} aria-label="Send">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M2 10l15-6-6 15-2-7-7-2z" />
+              </svg>
+            </button>
           </div>
           <p className="bottom-info">
             Gemini may dispaly inaccurate info, including about people, so

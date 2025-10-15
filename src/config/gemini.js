@@ -1,21 +1,15 @@
 /*
  * Install the Generative AI SDK
  *
- * $ npm install @google/generative-ai
+ * $ npm install @google/genai
  */
 
-import {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai"; // Changed package name
 
-const apiKey = "AIzaSyB3oBwfjC2E74uyAJQmWqV2eWp2jBJPYSI";
-const genAI = new GoogleGenerativeAI(apiKey);
+const apiKey = "AIzaSyD93qiUIRPQsQr8uA01xFgEkjlJXOWb7sA";
 
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-});
+// New way to instantiate the client
+const ai = new GoogleGenAI({ apiKey });
 
 const generationConfig = {
   temperature: 1,
@@ -26,17 +20,21 @@ const generationConfig = {
 };
 
 async function run(prompt) {
-  const chatSession = model.startChat({
+  const chatSession = ai.chats.create({
+    model: "gemini-2.5-flash",
     generationConfig,
-    // safetySettings: Adjust safety settings
-    // See https://ai.google.dev/gemini-api/docs/safety-settings
     history: [],
   });
 
-  const result = await chatSession.sendMessage(prompt);
-  const response = result.response;
-  console.log(response.text());
-  return response.text();
+  // 1. Send the message. 'result' is the full response object (GenerateContentResult).
+  const result = await chatSession.sendMessage({ message: prompt });
+
+  // 2. CORRECT ACCESS: Access the .text property directly.
+  // This is the fix for the "TypeError: result.text is not a function" error.
+  const responseText = result.text; // <<-- FIX APPLIED HERE
+
+  console.log(responseText);
+  return responseText;
 }
 
 export default run;
